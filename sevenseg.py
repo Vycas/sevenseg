@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-from UserString import MutableString
-
-class SevenSeg(int):
+def sevenseg(num):
     """
-    Class providing integer representation using seven digits display style.
+    Function converting integer to seven digits display style string.
     """
 
     segments = ( 
@@ -18,24 +16,9 @@ class SevenSeg(int):
         ('#   #', '    #', '#    ', '    #', '    #', '    #', '#   #', '    #', '#   #', '    #'),
         (' ### ', '     ', ' ### ', ' ### ', '     ', ' ### ', ' ### ', '     ', ' ### ', ' ### '))
 
-    def __str__(self):
-        num = self
-        digits = []
-        while num != 0:
-            num, last = divmod(num, 10)
-            digits.append(last)
-        if len(digits) == 0:
-            digits.append(0)
-        digits.reverse()
-        out = MutableString()
-        for row in range(9):
-            for d in digits:
-                out += self.segments[row][d]
-                out += '  '
-            out += '\n'
-        return str(out)
+    digits = [int(x) for x in str(num)]
+    return '\n'.join('  '.join([segments[row][d] for d in digits]) for row in range(9))
 
 if __name__ == '__main__':
     import sys
-    s = SevenSeg(sys.argv[1])
-    print s
+    print sevenseg(sys.argv[1])
